@@ -51,6 +51,13 @@ def encrypt():
     key = key % 26
     iteration = key
 
+    print(key)
+
+    if key == 0:
+        key = 20
+
+    print(key)
+
     if iteration <= 10:
         iteration = 10
 
@@ -68,6 +75,9 @@ def decrypt():
     ciphertext = ciphertext_box.get("1.0", tk.END).strip()
     key = key % 26
     iteration = key
+
+    if key == 0:
+        key = 20
 
     if iteration <= 10:
         iteration = 10
@@ -87,9 +97,6 @@ def is_number(char):
         return True
     except ValueError:
         return False
-
-def validate_key(char):
-    return is_number(char)
 
 def clear_all():
     # Clear all input and output fields
@@ -127,7 +134,7 @@ plaintext_text.pack(pady=5, padx=(10, 150))
 key_label = ttk.Label(encryption_page, width=50, text="Enter Key:")
 key_label.pack(pady=2, padx=(10, 150))
 
-validate_key_cmd = (encryption_page.register(validate_key), '%S')
+validate_key_cmd = (encryption_page.register(is_number), '%S')
 key_entry = ttk.Spinbox(encryption_page, from_=0, to=100, width=30, validate="key", validatecommand=validate_key_cmd)
 key_entry.pack(pady=5, padx=(10, 150))
 
@@ -161,7 +168,7 @@ ciphertext_box.pack(pady=5, padx=(10, 150))
 key_label = ttk.Label(decryption_page, width=50, text="Enter Key:")
 key_label.pack(pady=2, padx=(10, 150))
 
-validate_key_cmd = (decryption_page.register(validate_key), '%S')
+validate_key_cmd = (decryption_page.register(is_number), '%S')
 key_entry2 = ttk.Spinbox(decryption_page, from_=0, to=100, width=30, validate="key", validatecommand=validate_key_cmd)
 key_entry2.pack(pady=5, padx=(10, 150))
 
